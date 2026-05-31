@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #1D9E75;
+    --teal-lt: #E1F5EE;
+    --teal-dk: #085041;
+    --coral: #D85A30;
+    --coral-lt: #FAECE7;
+    --amber: #BA7517;
+    --amber-lt: #FAEEDA;
+    --purple: #534AB7;
+    --purple-lt: #EEEDFE;
+    --gray-lt: #F1EFE8;
+    --gray-mid: #888780;
+    --text: #1a1a1a;
+    --text-muted: #5F5E5A;
+    --border: rgba(0,0,0,0.1);
+    --bg: #faf9f6;
+    --card: #fff;
+  }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    padding: 3rem 2rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #04342C 0%, #085041 50%, #0F6E56 100%);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+    top: -100px; right: -100px;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    bottom: -60px; left: 40%;
+  }
+
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8rem;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: #9FE1CB;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .hero-summary {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+    max-width: 520px;
+    font-weight: 300;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-end;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.75rem;
+    color: #9FE1CB;
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .hero-years {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.5rem;
+    color: #fff;
+    line-height: 1;
+    text-align: right;
+  }
+
+  .hero-years span {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    display: block;
+    text-align: right;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  /* ---- STATS ROW ---- */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat {
+    padding: 1.25rem 1.5rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--teal-dk);
+    margin-bottom: 0.2rem;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  /* ---- MAIN GRID ---- */
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 0;
+  }
+
+  .col-left {
+    border-right: 1px solid var(--border);
+    padding: 2rem;
+  }
+
+  .col-right {
+    padding: 2rem;
+  }
+
+  /* ---- SECTION HEADS ---- */
+  .section-head {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ---- TIMELINE ---- */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .timeline-item:last-child { border-bottom: none; }
+
+  .t-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    padding-top: 2px;
+  }
+
+  .t-company {
+    font-weight: 600;
+    font-size: 0.88rem;
+    margin-bottom: 0.15rem;
+    color: var(--text);
+  }
+
+  .t-role {
+    font-size: 0.78rem;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+
+  .t-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .t-tag {
+    display: inline-block;
+    background: var(--teal-lt);
+    color: var(--teal-dk);
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 100px;
+    margin: 0.4rem 0.2rem 0 0;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.03em;
+  }
+
+  .t-tag.coral { background: var(--coral-lt); color: var(--coral); }
+  .t-tag.amber { background: var(--amber-lt); color: var(--amber); }
+  .t-tag.purple { background: var(--purple-lt); color: var(--purple); }
+
+  /* ---- RIGHT COLUMN ---- */
+  .skill-section { margin-bottom: 2rem; }
+
+  .skill-category {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .skill-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    background: var(--gray-lt);
+    color: var(--text);
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .chip.highlight {
+    background: var(--teal-lt);
+    color: var(--teal-dk);
+    font-weight: 500;
+  }
+
+  /* ---- CERT ---- */
+  .cert-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.78rem;
+  }
+
+  .cert-item:last-child { border-bottom: none; }
+
+  .cert-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  /* ---- CONTACT STRIP ---- */
+  .contact-strip {
+    background: var(--teal-dk);
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .contact-strip a {
+    color: #9FE1CB;
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-family: 'DM Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .contact-strip a:hover { color: #fff; }
+
+  .contact-label {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ---- IMPACT BAR ---- */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .impact-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.8rem;
+    text-align: center;
+  }
+
+  .impact-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--teal-dk);
+    line-height: 1;
+  }
+
+  .impact-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-title">Generative AI Architect · Tech Mahindra</div>
+    <div class="hero-name">Priyanka<br>Banda</div>
+    <div class="hero-summary">Designing and scaling production-grade AI systems for enterprise adoption. Specializing in agentic AI platforms, multi-agent orchestration, and AI governance frameworks across healthcare and analytics domains.</div>
+  </div>
+  <div class="hero-meta">
+    <div class="hero-years">9+<span>years exp.</span></div>
+    <div class="hero-badge">🇮🇳 Hyderabad, India</div>
+    <div class="hero-badge">Agent Orchestration</div>
+    <div class="hero-badge">LangGraph · Claude</div>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat">
+    <div class="stat-num">40%</div>
+    <div class="stat-label">MTTR Reduction</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">55%</div>
+    <div class="stat-label">Ops Efficiency</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">50%</div>
+    <div class="stat-label">Manual Effort Cut</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Companies Impacted</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="col-left">
+    <div class="section-head">Experience</div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="t-year">2024–<br>Present</div>
+        <div>
+          <div class="t-company">Tech Mahindra</div>
+          <div class="t-role">Generative AI Architect</div>
+          <div class="t-desc">Led architecture of a production-grade Agentic AI platform on OpenShift. Designed multi-agent orchestration (A2A) systems for healthcare diagnostics and analytics. Established observability &amp; governance frameworks, reducing MTTR by 40%.</div>
+          <div>
+            <span class="t-tag">LangGraph</span>
+            <span class="t-tag">OpenShift</span>
+            <span class="t-tag">A2A Orchestration</span>
+            <span class="t-tag purple">Infermedica</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="t-year">2024–<br>2025</div>
+        <div>
+          <div class="t-company">GE Vernova</div>
+          <div class="t-role">AI Lead</div>
+          <div class="t-desc">Architected AI-driven automation platform for geo-aero tagging, achieving 55% operational efficiency improvement. Productionized transformer-based tagging systems and embedding architectures, reducing sensor onboarding time by 30%.</div>
+          <div>
+            <span class="t-tag coral">Transformers</span>
+            <span class="t-tag coral">Embedding Models</span>
+            <span class="t-tag">Enterprise Pipelines</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="t-year">2023–<br>2024</div>
+        <div>
+          <div class="t-company">Ascendum Solutions</div>
+          <div class="t-role">Gen AI Lead – Platform</div>
+          <div class="t-desc">Built enterprise-grade RAG systems for large-scale document intelligence. Improved extraction accuracy by 40% and reduced manual effort by ~50% through containerized AI services on Azure with CI/CD pipelines.</div>
+          <div>
+            <span class="t-tag amber">RAG</span>
+            <span class="t-tag amber">Azure</span>
+            <span class="t-tag">CI/CD</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="t-year">2021–<br>2022</div>
+        <div>
+          <div class="t-company">Persistent Systems</div>
+          <div class="t-role">Machine Learning Engineer</div>
+          <div class="t-desc">Developed bias detection and mitigation frameworks using AIF360 and AIX360. Built responsible, explainable AI systems for IBM Watson ecosystem enterprise environments.</div>
+          <div>
+            <span class="t-tag purple">AIF360</span>
+            <span class="t-tag purple">AIX360</span>
+            <span class="t-tag purple">IBM Watson</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="t-year">2017–<br>2021</div>
+        <div>
+          <div class="t-company">Cognizant</div>
+          <div class="t-role">ML Engineer · Programmer Analyst</div>
+          <div class="t-desc">Built NLP pipelines for enterprise document automation using LSTM and BERT, reducing processing time by 50%. Designed scalable document extraction systems integrated into enterprise platforms.</div>
+          <div>
+            <span class="t-tag">BERT</span>
+            <span class="t-tag">LSTM</span>
+            <span class="t-tag">NLP Pipelines</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-right">
+
+    <div class="section-head">Key Impact</div>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <div class="impact-num">40%</div>
+        <div class="impact-label">Extraction accuracy gain</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-num">30%</div>
+        <div class="impact-label">Faster onboarding</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-num">55%</div>
+        <div class="impact-label">Ops efficiency</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-num">50%</div>
+        <div class="impact-label">Less manual work</div>
+      </div>
+    </div>
+
+    <div class="skill-section">
+      <div class="section-head">Skills</div>
+
+      <div class="skill-category">Agent & Orchestration</div>
+      <div class="skill-chips">
+        <span class="chip highlight">LangGraph</span>
+        <span class="chip highlight">Claude Skills</span>
+        <span class="chip highlight">A2A Orchestration</span>
+        <span class="chip">LlamaIndex</span>
+        <span class="chip">Multi-Agent Systems</span>
+      </div>
+
+      <div class="skill-category">ML & Models</div>
+      <div class="skill-chips">
+        <span class="chip">Transformer Models</span>
+        <span class="chip">BERT / LSTM</span>
+        <span class="chip">RAG</span>
+        <span class="chip">Embeddings</span>
+        <span class="chip">NLP</span>
+      </div>
+
+      <div class="skill-category">Platform & DevOps</div>
+      <div class="skill-chips">
+        <span class="chip">OpenShift</span>
+        <span class="chip">Azure</span>
+        <span class="chip">CI/CD</span>
+        <span class="chip">Docker</span>
+        <span class="chip">GitLab</span>
+      </div>
+
+      <div class="skill-category">Governance & Ethics</div>
+      <div class="skill-chips">
+        <span class="chip">AIF360</span>
+        <span class="chip">AIX360</span>
+        <span class="chip">Observability</span>
+        <span class="chip">Responsible AI</span>
+      </div>
+    </div>
+
+    <div class="section-head">Certifications</div>
+    <div>
+      <div class="cert-item"><div class="cert-dot"></div><div>NLP with BERT</div></div>
+      <div class="cert-item"><div class="cert-dot"></div><div>Agentic RAG with LlamaIndex</div></div>
+      <div class="cert-item"><div class="cert-dot"></div><div>Introduction to Generative AI</div></div>
+      <div class="cert-item"><div class="cert-dot"></div><div>Google Cloud Computing Fundamentals</div></div>
+    </div>
+
+    <div class="section-head" style="margin-top: 1.5rem;">Education</div>
+    <div>
+      <div class="cert-item">
+        <div class="cert-dot"></div>
+        <div>
+          <div style="font-weight: 500;">B.Tech – EEE</div>
+          <div style="color: var(--text-muted); font-size: 0.72rem;">Kakatiya University · 2016</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="contact-strip">
+  <div>
+    <div class="contact-label">Email</div>
+    <a href="mailto:priyankabanda2202@gmail.com">priyankabanda2202@gmail.com</a>
+  </div>
+  <div>
+    <div class="contact-label">LinkedIn</div>
+    <a href="https://www.linkedin.com/in/priyankabanda-33496310a" target="_blank">linkedin.com/in/priyankabanda</a>
+  </div>
+  <div>
+    <div class="contact-label">Location</div>
+    <span style="color: rgba(255,255,255,0.5); font-size: 0.78rem; font-family: 'DM Mono', monospace;">Hyderabad, India</span>
+  </div>
+</div>
+
+</body>
+</html>
