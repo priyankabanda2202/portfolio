@@ -4,9 +4,15 @@
   ],
   "headers": [
     {
-      "source": "/preview.jpg",
+      "source": "/preview.jpeg",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
+      "source": "/profile.jpg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
     }
   ]
